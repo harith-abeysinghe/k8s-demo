@@ -1,5 +1,8 @@
 package com.example.userservice;
 
+import com.example.userservice.clients.OrderClient;
+import com.example.userservice.dto.OrderDto;
+import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +12,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
     private static final Logger logger = LogManager.getLogger(UserController.class);
     @Autowired
     private UserRepository userRepository;
+    private final OrderClient orderClient;
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -24,6 +29,10 @@ public class UserController {
     public User createUser(@RequestBody User user) {
         logger.info("Create user : {}", user);
         return userRepository.save(user);
+    }
+    @GetMapping("/{userId}/orders")
+    public List<OrderDto> getUserOrders(@PathVariable Long userId) {
+        return orderClient.getOrdersByUserId(userId);
     }
 }
 
