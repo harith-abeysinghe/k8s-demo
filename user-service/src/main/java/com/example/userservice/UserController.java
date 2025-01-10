@@ -5,7 +5,6 @@ import com.example.userservice.dto.OrderDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +14,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private static final Logger logger = LogManager.getLogger(UserController.class);
-    @Autowired
-    private UserRepository userRepository;
+
+    private final UserRepository userRepository;
     private final OrderClient orderClient;
 
     @GetMapping
@@ -27,7 +26,7 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        logger.info("Create user : {}", user);
+        logger.info("Create user : {}", user.getName());
         return userRepository.save(user);
     }
     @GetMapping("/{userId}/orders")
