@@ -3,3 +3,4 @@
 /.idea
 .idea/k8s-springboot-demo.iml
 /NodeJS/services/user-service/node_modules
+/NodeJS/services/order-service/node_modules
