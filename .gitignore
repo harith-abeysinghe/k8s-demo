@@ -6,3 +6,5 @@
 /NodeJS/services/order-service/node_modules
 /NodeJS/services/library-service/node_modules
 NodeJS/services/library-service/.env
+NodeJS/services/user-service/.env
+NodeJS/services/order-service/.env
