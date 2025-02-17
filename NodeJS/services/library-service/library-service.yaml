@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: library-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: library-service
+  template:
+    metadata:
+      labels:
+        app: library-service
+      annotations:
+        prometheus.io/scrape: "true" # Enable scraping for Prometheus
+        prometheus.io/port: "3003" # Port where metrics are exposed
+        prometheus.io/path: "/metrics" # Path where metrics are exposed
+    spec:
+      containers:
+        - name: library-service
+          image: library-service:1.0
+          ports:
+            - containerPort: 3003
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: library-service
+spec:
+  selector:
+    app: library-service
+  ports:
+    - protocol: TCP
+      port: 3003
+      targetPort: 3003
+  type: LoadBalancer

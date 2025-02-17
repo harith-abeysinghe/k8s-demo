@@ -1,0 +1,3 @@
+echo Exposing Grafana to port 3000...
+echo Access Grafana at http://localhost:3000
+kubectl port-forward svc/grafana 3000:80

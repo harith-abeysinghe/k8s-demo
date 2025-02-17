@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+      annotations:
+        prometheus.io/scrape: "true" # Enable scraping for Prometheus
+        prometheus.io/port: "3002" # Port where metrics are exposed
+        prometheus.io/path: "/metrics" # Path where metrics are exposed
+    spec:
+      containers:
+        - name: order-service
+          image: order-service:1.0
+          ports:
+            - containerPort: 3002
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+spec:
+  selector:
+    app: order-service
+  ports:
+    - protocol: TCP
+      port: 3002
+      targetPort: 3002
+  type: LoadBalancer

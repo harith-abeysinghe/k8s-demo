@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const sequelize = require("../config/db");
+const sequelize = require("../config/db"); // Import the sequelize instance
 
 const Author = sequelize.define("Author", {
 	name: {
@@ -8,4 +8,5 @@ const Author = sequelize.define("Author", {
 	},
 });
 
+// Define the association later in a separate file or after the models are both defined
 module.exports = Author;
